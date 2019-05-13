@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{employee && employee['name'] || 'Sin nombre'}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+ 
+  
+  <card-log *ngFor="let card of attendances" [apk]="apk" [card]="card" (notify)="open_gps()">
+  
+  </card-log>
+  
+  
+  
+
+
+</ion-content>

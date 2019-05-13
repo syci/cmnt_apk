@@ -1,0 +1,38 @@
+<!-- Generated template for the CardLogComponent component -->
+ <ion-card>
+  
+    <ion-row>
+      <ion-col text-center>
+      <h2>{{card.day}}</h2>
+       
+      </ion-col>
+     
+     
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-4>
+        <button ion-button icon-start clear color="sucess" small>
+        
+          <ion-icon color="log_in" name="log-in"></ion-icon>
+          <ion-icon [hidden]="!card.gps_in" color="log_in" name="locate"></ion-icon>
+          <div color="log_in" >{{card.log_in_hour}}</div>
+          
+        </button>
+
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button icon-start clear color="warning" small>
+         <ion-icon color="log_out" name="log-out"></ion-icon>
+         <ion-icon [hidden]="!card.gps_out" color="log_out" name="locate"></ion-icon>
+          <div>{{card.log_out_hour}}</div>
+        </button>
+      </ion-col>
+      
+        
+      <ion-col col-4 align-self-center text-center >
+        <ion-badge class="log_badge">{{card.worked_hours}}h</ion-badge>
+      </ion-col>
+    </ion-row>
+
+</ion-card>

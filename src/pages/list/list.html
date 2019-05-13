@@ -3,21 +3,86 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>{{employee && employee['name']}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
-  </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+    <ion-row >
+          <ion-col col-4></ion-col>
+          <ion-col text-center col-4> 
+            <img  *ngIf="apk && apk['image']" style="align: center; width: 80px; height: 80px;"  class="img-b64-content" src="data:image/jpeg;base64,{{apk && apk['image']}}"/>
+          </ion-col>
+          <ion-col col-4>
+          
+          </ion-col>
+
+      </ion-row>  
+   <ion-card *ngIf="apk && employee" (click)='check_log()' [color]="employee['state']">
+    
+    <ion-item>
+      <h2>
+       {{date}}
+      </h2>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <!--h3 color="log_in">
+        {{state[employee['state']]}}
+        </h3-->
+        <button [hidden]="employee['state']=='present'" color="log_in" ion-button icon-start clear >
+          <ion-icon color="log_in" name="log-in"></ion-icon>
+          <h2>Entrada</h2>
+        </button>
+        <button [hidden]="employee['state']!='present'" color="log_out" ion-button icon-start clear >
+         <ion-icon color="log_out" name="log-out"></ion-icon>
+            <h2 >Salida</h2>
+        </button>
+      </ion-col>
+      <ion-col>
+        <!--button ion-button icon-start clear small>
+         <ion-icon name="log-out"></ion-icon>
+          <div>Log out</div>
+        </button-->
+      </ion-col>
+      <ion-col align-self-center text-center>
+        
+        <!--ion-note><ion-icon color="log_in" name="log-in"></ion-icon>
+          Duración
+        </ion-note-->
+      </ion-col>
+    
+    </ion-row>
+    
+    
+    <ion-row >
+      <ion-col>
+        <!--ion-icon *ngIf="gps" color="log_in" name="locate" click="alternate_show_gps_info()"></ion-icon-->
+      </ion-col>
+      <ion-col>
+       <div *ngIf="gps"> {{gps['latitude']}} / {{gps['longitude']}} / {{gps['accuracity']}} m.</div> 
+       <div *ngIf="!gps">NO GPS</div> 
+      </ion-col>
+    </ion-row>
+
+    
+
+</ion-card>
+ <ion-row (click)="open_url()">
+          <ion-col col-4></ion-col>
+          <ion-col text-center col-4>
+            <img style="align: center; width: 80px; height: 80px;" *ngIf="gps" src="assets/imgs/GoogleMaps_logo.png" (click)="open_url()"/>
+             
+          </ion-col>
+          <ion-col col-4></ion-col>
+      </ion-row>  
+  <!--map-position [url] = "url_map"></map-position-->
+  <!--card-log *ngFor="let card of attendances" [card]="card" (notify)="open_gps()">
+  
+  </card-log-->
+  
+  
+  
+
+
 </ion-content>
