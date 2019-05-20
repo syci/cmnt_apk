@@ -21,8 +21,9 @@
    <ion-card *ngIf="apk && employee" (click)='check_log()' [color]="employee['state']">
     
     <ion-item>
-      <h2>
-       {{date}}
+   
+      <h2 text-center>
+       {{employee && employee['last_sign_tz']}}
       </h2>
     </ion-item>
     <ion-row>
@@ -30,23 +31,42 @@
         <!--h3 color="log_in">
         {{state[employee['state']]}}
         </h3-->
-        <button [hidden]="employee['state']=='present'" color="log_in" ion-button icon-start clear >
+        
+      </ion-col>
+
+      <ion-col><button [hidden]="employee['state']=='present'" color="log_in" ion-button icon-start clear >
           <ion-icon color="log_in" name="log-in"></ion-icon>
-          <h2>Entrada</h2>
+           <ion-label>Entrada</ion-label>
         </button>
         <button [hidden]="employee['state']!='present'" color="log_out" ion-button icon-start clear >
          <ion-icon color="log_out" name="log-out"></ion-icon>
-            <h2 >Salida</h2>
+            <ion-label>H. entrada: {{ employee['last_sign_hour']}} >> Salida</ion-label>
         </button>
-      </ion-col>
-      <ion-col>
         <!--button ion-button icon-start clear small>
          <ion-icon name="log-out"></ion-icon>
           <div>Log out</div>
         </button-->
       </ion-col>
       <ion-col align-self-center text-center>
-        
+       
+      
+        <!--ion-note><ion-icon color="log_in" name="log-in"></ion-icon>
+          Duración
+        </ion-note-->
+      </ion-col>
+    
+    </ion-row>
+    <ion-row>
+      <ion-col>
+       
+      </ion-col>
+
+      <ion-col align-self-center text-center>
+         <div *ngIf="gps['accuracity']">
+        Precisión: {{gps['accuracity']}} m.</div> 
+       <div *ngIf="!gps['accuracity']">NO GPS</div>
+       
+      
         <!--ion-note><ion-icon color="log_in" name="log-in"></ion-icon>
           Duración
         </ion-note-->
@@ -55,20 +75,12 @@
     </ion-row>
     
     
-    <ion-row >
-      <ion-col>
-        <!--ion-icon *ngIf="gps" color="log_in" name="locate" click="alternate_show_gps_info()"></ion-icon-->
-      </ion-col>
-      <ion-col>
-       <div *ngIf="gps"> {{gps['latitude']}} / {{gps['longitude']}} / {{gps['accuracity']}} m.</div> 
-       <div *ngIf="!gps">NO GPS</div> 
-      </ion-col>
-    </ion-row>
+    
 
     
 
 </ion-card>
- <ion-row (click)="open_url()">
+ <ion-row >
           <ion-col col-4></ion-col>
           <ion-col text-center col-4>
             <img style="align: center; width: 80px; height: 80px;" *ngIf="gps" src="assets/imgs/GoogleMaps_logo.png" (click)="open_url()"/>

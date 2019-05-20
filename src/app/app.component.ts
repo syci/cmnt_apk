@@ -10,7 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LogHistoryPage } from '../pages/log-history/log-history';
 
-
+import { AudioPlayer } from '../providers/audio/audio'
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +23,7 @@ export class MyApp {
   
   pages: Array<{title: string, component: any}>;
   user={}
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public storage: Storage ) {
+  constructor(player: AudioPlayer, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public storage: Storage ) {
 
     this.initializeApp();
 
@@ -33,7 +33,13 @@ export class MyApp {
       { title: 'Registrar', component: ListPage },
       { title: 'Histórico', component: LogHistoryPage }
     ];
+    player.preload('click', 'assets/audio/click.mp3');
+    player.preload('check_in', 'assets/audio/check_in.mp3');
+    player.preload('check_out', 'assets/audio/check_out.mp3');
+    player.preload('ok', 'assets/audio/ok.mp3');
 
+    player.preload('gps_ok', 'assets/audio/gps_ok.mp3');
+    player.preload('error', 'assets/audio/error.mp3');
   }
 
   initializeApp() {
@@ -51,3 +57,6 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 }
+
+
+

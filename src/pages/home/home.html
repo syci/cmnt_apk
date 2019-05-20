@@ -4,7 +4,10 @@
       <ion-row>
         <ion-col width-100>
           <div style="text-align: center">
-            <img style="height: 100px" src="assets/imgs/logo.png" alt="Warehouse APP" />
+            <img *ngIf="!apk_image" style="height: 100px" src="assets/imgs/logo.png" alt="Warehouse APP" />
+            
+            <img *ngIf="apk_image" style="align: center; width: 100px; height: 100px;" src="data:image/jpeg;base64,{{apk_image}}"/>
+              
           </div>
         </ion-col>
       </ion-row>
