@@ -4,6 +4,7 @@ import {Component} from '@angular/core';
 import { Storage} from '@ionic/storage';
 import { OdooProvider } from '../../providers/odoo-connector/odoo-connector';
 import { ListPage } from '../list/list';
+import { AudioPlayer } from '../../providers/audio/audio';
 
 
 
@@ -19,11 +20,11 @@ export class HomePage {
       url: 'https://odoo.cbgrancanaria.net/',
       port: '443',
       db: 'cbgc',
-      username: '',
-			password: '',
+      username: 'comunitea',
+			password: '7V(3R~6S372wb@o',
 		  user: {}
 	};
-		CONEXION_remote = {
+		CONEXION_remote= {
 			url: 'http://192.168.0.10/',
 			port: '8069',
 			db: 'clock',
@@ -44,13 +45,19 @@ user: {}
   cargar = false;
 	mensaje = '';
 	login_server: boolean = false
-
-    constructor(public navCtrl: NavController, public navParams: NavParams,
+	apk_image
+    constructor(public player: AudioPlayer, public navCtrl: NavController, public navParams: NavParams,
                 private storage: Storage, public alertCtrl: AlertController,
                 private odoo: OdooProvider) {
 		
 		this.login_server = false
-		
+		this.storage.get('APK_IMAGE').then((image) => {
+			if (image){
+				this.apk_image = image}
+			
+			else
+			{this.apk_image = false}})
+
 		if (this.navParams.get('login')){
 			this.CONEXION.username = this.navParams.get('login')};
 			this.check_storage_conexion(this.navParams.get('borrar'))
@@ -87,6 +94,7 @@ user: {}
 
 
 	conectarApp(verificar){
+		this.player.play('click')
 		this.cargar = true;
 		if (verificar){
 			this.storage.set('CONEXION', this.CONEXION).then(() => {
@@ -102,6 +110,7 @@ user: {}
 					con = this.CONEXION;
 					if (con.username.length < 3 || con.password.length < 3) {
 						if (verificar) {
+							this.player.play('error')
 							this.presentAlert('Alerta!', 'Por favor ingrese usuario y contraseña');
 						}
 					return;
@@ -111,12 +120,14 @@ user: {}
 				//si los trae directamente ya fueron verificados
 					con = val;
 					if (con.username.length < 3 || con.password.length < 3) {
+						this.player.play('error')
 						this.cargar = false;
 						return
 					}
 				}
 				if (con){
 					this.storage.set('CONEXION', con).then(() => {
+						this.player.play('ok')
 						this.load_user(con)
 						
 					})
@@ -146,6 +157,9 @@ user: {}
 						this.cargar =false;
 						this.employee=employee['employee']
 						this.apk=employee['apk']
+						this.storage.set('APK_IMAGE', this.apk['image']).then(() => {
+            
+						})
 						document.documentElement.style.setProperty(`--logo_color`, this.apk['logo_color']);
 						this.navCtrl.setRoot(ListPage, employee);
 					})  

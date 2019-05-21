@@ -6,7 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LogHistoryPage } from '../pages/log-history/log-history';
-
+import { NativeAudio } from '@ionic-native/native-audio';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
@@ -15,6 +15,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { CardLogComponent} from '../components/card-log/card-log';
 import { NetworkInterface } from '@ionic-native/network-interface/ngx';
 import { SafePipe } from './safe.pipe';
+import { AudioPlayer } from '../providers/audio/audio';
+
 
 @NgModule({
   declarations: [
@@ -44,8 +46,10 @@ import { SafePipe } from './safe.pipe';
     Geolocation,
     OdooProvider,
     NetworkInterface,
-
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AudioPlayer,
+    NativeAudio
   ]
 })
 export class AppModule {

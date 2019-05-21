@@ -4,7 +4,7 @@ import { OdooProvider } from '../../providers/odoo-connector/odoo-connector';
 import { Storage} from '@ionic/storage';
 
 import { HomePage } from '../home/home';
-
+import { AudioPlayer } from '../../providers/audio/audio';
 /**
  * Generated class for the LogHistoryPage page.
  *
@@ -23,7 +23,7 @@ export class LogHistoryPage {
   apk: {}
   attendances
 
-  constructor(public navCtrl: NavController, private odoo: OdooProvider, private storage: Storage, public alertCtrl: AlertController, public navParams: NavParams) {
+  constructor(public player: AudioPlayer, public navCtrl: NavController, private odoo: OdooProvider, private storage: Storage, public alertCtrl: AlertController, public navParams: NavParams) {
     
     
     this.storage.get('EMPLEADO').then((empleado) => {
@@ -34,6 +34,7 @@ export class LogHistoryPage {
       }
       else{
         this.navCtrl.setRoot(HomePage);
+        this.player.play('error')
       }
       
     })
@@ -57,8 +58,10 @@ get_attendances(){
   this.odoo.execute(model, 'get_logs', values).then((atts)=>{
     console.log(atts)
     this.attendances = atts 
+    this.player.play('ok')
   })
   .catch(() => {
+    this.player.play('error')
     this.presentAlert('Error!', 'No se pudo recuperar la lista de logs contra odoo');
   });
 
